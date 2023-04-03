@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/data/scaling_query.dart';
 
-
-Future<bool?> showMyDialog(BuildContext ctx) async {
-
+Future<bool?> showMyDialog(BuildContext ctx, String dialogueTitle) async {
   return showDialog<bool>(
-   context: ctx,
-   barrierDismissible: false,
+    context: ctx,
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Alert !'),
+        title: Text('Alert !',
+            style: TextStyle(
+                fontSize: ScalingQuery(context).fontSize(2.5))),
         content: SingleChildScrollView(
           child: ListBody(
-            children: const <Widget>[
-              Text('Are you sure you want to delete this task ?'),
+            children: <Widget>[
+              Text(
+                dialogueTitle,
+                style: TextStyle(
+                    fontSize: ScalingQuery(context).fontSize(2)),
+              ),
             ],
           ),
         ),

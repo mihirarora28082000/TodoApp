@@ -1,27 +1,33 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:todoapp/data/models/task.dart';
 part 'todo_event.dart';
 part 'todo_state.dart';
 
-class TodoBloc extends Bloc<TodoEvent, TodoState> {
+class TodoBloc extends HydratedBloc<TodoEvent, TodoState> {
   TodoBloc() : super(const TodoState()) {
     on<AddTask>(_onAddTask);
     on<ChangeTaskState>(_onTaskStateChange);
     on<DeleteTask>(_onDeleteTask);
+    on<DeleteAllTasks>(_deleteAllTasks);
   }
 
-  void _onAddTask(AddTask event, Emitter<TodoState> emit) {
+  void _onAddTask(AddTask event, Emitter<TodoState> emit) async {
     final state = this.state;
+
+    List<TodoTask> outgoingTasks = state.outgoingTasks;
+    List<TodoTask> completedTasks = state.completedTasks;
+    outgoingTasks = List.from(state.outgoingTasks)
+      ..removeWhere((task) => ((task.id) == (event.task.id)))
+      ..add(event.task)
+      ..sort((a, b) => a.date.compareTo(b.date));
+    completedTasks = this.state.completedTasks;
     emit(TodoState(
-      outgoingTasks: List.from(state.outgoingTasks)
-        ..add(event.task)
-        ..sort((a, b) => a.priority.compareTo(b.priority)),
-      completedTasks: this.state.completedTasks,
-    ));
+        outgoingTasks: outgoingTasks, completedTasks: completedTasks));
   }
 
-  void _onTaskStateChange(ChangeTaskState event, Emitter<TodoState> emit) {
+  void _onTaskStateChange(
+      ChangeTaskState event, Emitter<TodoState> emit) async {
     final state = this.state;
     final task = event.task;
     List<TodoTask> outgoingTasks = state.outgoingTasks;
@@ -29,23 +35,50 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     task.isCompleted == false
         ? {
             completedTasks = List.from(completedTasks)
-              ..insert(0, task.copyWith(isCompleted: true)),
+              ..add(task.copyWith(isCompleted: true))
+              ..sort((a, b) => a.date.compareTo(b.date)),
             outgoingTasks = List.from(outgoingTasks)..remove(task)
           }
         : {
             outgoingTasks = List.from(outgoingTasks)
-              ..insert(0, task.copyWith(isCompleted: false)),
+              ..add(task.copyWith(isCompleted: false))
+              ..sort((a, b) => a.date.compareTo(b.date)),
             completedTasks = List.from(completedTasks)..remove(task)
           };
     emit(TodoState(
         outgoingTasks: outgoingTasks, completedTasks: completedTasks));
   }
 
-  void _onDeleteTask(DeleteTask event, Emitter<TodoState> emit) {
+  void _onDeleteTask(DeleteTask event, Emitter<TodoState> emit) async {
     final task = event.task;
+    List<TodoTask> outgoingTasks = state.outgoingTasks;
+    List<TodoTask> completedTasks = state.completedTasks;
+    if (task.isCompleted) {
+      completedTasks = List.from(completedTasks)..remove(task);
+    } else {
+      outgoingTasks = List.from(outgoingTasks)..remove(task);
+    }
 
     emit(TodoState(
-        outgoingTasks: List.from(this.state.outgoingTasks)..remove(task),
-        completedTasks: List.from(this.state.completedTasks)..remove(task)));
+        outgoingTasks: outgoingTasks, completedTasks: completedTasks));
+  }
+
+  void _deleteAllTasks(DeleteAllTasks event, Emitter<TodoState> emit) async {
+    List<TodoTask> outgoingTasks = state.outgoingTasks;
+    List<TodoTask> completedTasks = state.completedTasks;
+    outgoingTasks = [];
+    completedTasks = [];
+    emit(TodoState(
+        outgoingTasks: outgoingTasks, completedTasks: completedTasks));
+  }
+
+  @override
+  TodoState? fromJson(Map<String, dynamic> json) {
+    return TodoState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(TodoState state) {
+    return state.toMap();
   }
 }

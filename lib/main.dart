@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:todoapp/bloc/todo_bloc.dart';
-import 'package:todoapp/data/models/task.dart';
-import 'package:todoapp/presentation/screen/todo_screen.dart';
+import 'package:todoapp/presentation/screen/home_screen.dart';
 
-void main() {
-  BlocOverrides.runZoned(
-    () => runApp(const MyApp()),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -17,33 +19,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TodoBloc()
-        ..add(AddTask(
-          task: TodoTask(
-            id: '1',
-            name: 'Drink Water',
-            description: 'We should drink water for better performance',
-            date: DateTime.now(),
-            priority: 1,
-          ),
-        ))
-        ..add(AddTask(
-          task: TodoTask(
-            id: '2',
-            name: 'Drink Juice',
-            description: 'We should drink Juice for better performance',
-            date: DateTime.now(),
-            priority: 2,
-          ),
-        )),
+      create: (context) => TodoBloc(),
       child: MaterialApp(
         title: 'Todo App',
         theme: ThemeData(
           primarySwatch: Colors.purple,
-          errorColor: Colors.red
+          errorColor: Colors.red,
         ),
-        home: const TodoApp(),
         debugShowCheckedModeBanner: false,
+        home: const HomeScreen(),
       ),
     );
   }

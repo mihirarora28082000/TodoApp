@@ -7,28 +7,33 @@ abstract class TodoEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AddTask extends TodoEvent{
+class AddTask extends TodoEvent {
   final TodoTask task;
 
-  const AddTask({required this.task });
+  const AddTask({required this.task});
 
   @override
   List<Object> get props => [task];
 }
 
-class ChangeTaskState extends TodoEvent{
+class ChangeTaskState extends TodoEvent {
   final TodoTask task;
 
-  const ChangeTaskState({required this.task });
+  const ChangeTaskState({required this.task});
 
   @override
   List<Object> get props => [task];
 }
 
-class DeleteTask extends TodoEvent{
+class DeleteAllTasks extends TodoEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class DeleteTask extends TodoEvent {
   final TodoTask task;
 
-  const DeleteTask({required this.task });
+  const DeleteTask({required this.task});
 
   @override
   List<Object> get props => [task];
