@@ -20,17 +20,29 @@ Future<void> showModal(BuildContext context, Function setState,
       TextEditingController(text: descriptionText);
   TextEditingController title = TextEditingController(text: titleText);
   DateTime? pickedDate = dateInputText ?? DateTime.now();
+  bool showError = false;
   TextEditingController dateInput =
       TextEditingController(text: DateFormat('dd-MM-yyyy').format(pickedDate));
 
   var mediaQuery = MediaQuery.of(context);
-  TextField emailInputBox() {
+  TextField todoInputBox(Function setState) {
     return TextField(
         style: titleText != '' ? const TextStyle(color: Colors.grey) : null,
         readOnly: titleText == '' ? false : true,
         controller: title,
+        onChanged: (value) {
+          if (value == '') {
+            setState(() {
+              showError = true;
+            });
+          } else {
+            setState(() {
+              showError = false;
+            });
+          }
+        },
         decoration: InputDecoration(
-            errorText: title.text == '' ? EMAIL_CANT_BE_EMPTY : null,
+            errorText: showError == true ? TODO_CANT_BE_EMPTY : null,
             hintText: TASK_TITLE_HINT_TEXT));
   }
 
@@ -92,7 +104,8 @@ Future<void> showModal(BuildContext context, Function setState,
       builder: ((ctx) {
         return Container(
             color: lightGrey,
-            padding: EdgeInsets.only(bottom: mediaQuery.viewInsets.bottom),
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
             height: mediaQuery.orientation == Orientation.landscape
                 ? mediaQuery.size.height * 0.8
                 : mediaQuery.size.height * 0.7,
@@ -100,7 +113,7 @@ Future<void> showModal(BuildContext context, Function setState,
                 child: Column(children: <Widget>[
               ListTile(
                   leading: const Icon(Icons.today_outlined),
-                  title: emailInputBox()),
+                  title: todoInputBox(setState)),
               ListTile(
                   leading: const Icon(Icons.description),
                   title: descriptionInputBox()),

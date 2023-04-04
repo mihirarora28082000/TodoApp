@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/data/scaling_query.dart';
+
+import 'package:todoapp/presentation/utils/scaling_query.dart';
 import 'package:todoapp/presentation/constants/label_names.dart';
 
 Future<bool?> showMyDialog(BuildContext ctx, String dialogueTitle) async {

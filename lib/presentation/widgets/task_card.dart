@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+
 import 'package:todoapp/data/models/task.dart';
 import 'package:todoapp/presentation/bloc/todo_bloc.dart';
 import 'package:todoapp/presentation/constants/colors.dart';
@@ -10,10 +11,9 @@ import 'package:todoapp/presentation/utils/task_priority_color.dart';
 import 'package:todoapp/presentation/widgets/alert_dialogue.dart';
 import 'package:todoapp/presentation/utils/snackbar.dart';
 import 'package:todoapp/presentation/widgets/icon_button.dart';
-
 import 'package:todoapp/presentation/widgets/modal_bottom.dart';
 import 'package:todoapp/presentation/constants/icons.dart';
-import 'package:todoapp/data/scaling_query.dart';
+import 'package:todoapp/presentation/utils/scaling_query.dart';
 
 class TaskCard extends StatefulWidget {
   final TodoTask task;
@@ -80,6 +80,7 @@ class _TaskCardState extends State<TaskCard> {
                     child: const Icon(Icons.today_outlined,
                         color: Colors.white, size: 30)),
             onDismissed: (direction) {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
               context.read<TodoBloc>().add(ChangeTaskState(task: widget.task));
               !widget.task.isCompleted
                   ? snackBar(context, SNACK_BAR_ON_TASK_COMPLETE, true)

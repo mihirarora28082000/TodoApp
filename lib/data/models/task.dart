@@ -1,6 +1,6 @@
-import 'package:equatable/equatable.dart';
+import 'package:todoapp/domain/entities/todo_entity.dart';
 
-class TodoTask extends Equatable {
+class TodoTask extends TodoEntity {
   final String id;
   final String name;
   final String description;
@@ -14,11 +14,14 @@ class TodoTask extends Equatable {
       required this.name,
       required this.date,
       required this.priority,
-      required this.isCompleted});
-
-  @override
-  List<Object?> get props =>
-      [id, description, name, date, priority, isCompleted];
+      required this.isCompleted})
+      : super(
+            id: id,
+            description: description,
+            name: name,
+            date: date,
+            priority: priority,
+            isCompleted: isCompleted);
 
   TodoTask copyWith(
       {String? name,

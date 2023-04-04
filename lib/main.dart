@@ -5,11 +5,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:todoapp/presentation/bloc/todo_bloc.dart';
 import 'package:todoapp/presentation/constants/label_names.dart';
 import 'package:todoapp/presentation/screen/home_screen.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  HydratedBloc.storage = await HydratedStorage.build(
-      storageDirectory: await getApplicationDocumentsDirectory());
+  if (!kIsWeb) {
+    WidgetsFlutterBinding.ensureInitialized();
+    HydratedBloc.storage = await HydratedStorage.build(
+        storageDirectory: await getApplicationDocumentsDirectory());
+  }
   runApp(const MyApp());
 }
 

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todoapp/data/models/task.dart';
 import 'package:todoapp/presentation/bloc/todo_bloc.dart';
 import 'package:todoapp/presentation/widgets/task_card.dart';
-
 import 'package:todoapp/presentation/constants/label_names.dart';
 
 class CompletedTasks extends StatefulWidget {

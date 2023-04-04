@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:todoapp/presentation/bloc/todo_bloc.dart';
 import 'package:todoapp/presentation/constants/colors.dart';
 import 'package:todoapp/presentation/constants/label_names.dart';
@@ -9,9 +10,8 @@ import 'package:todoapp/presentation/constants/icons.dart';
 import 'package:todoapp/presentation/screen/completed_tasks.dart';
 import 'package:todoapp/presentation/screen/current_tasks.dart';
 import 'package:todoapp/presentation/widgets/modal_bottom.dart';
-
 import 'package:todoapp/presentation/widgets/alert_dialogue.dart';
-import 'package:todoapp/data/scaling_query.dart';
+import 'package:todoapp/presentation/utils/scaling_query.dart';
 
 class TodoApp extends StatefulWidget {
   const TodoApp({super.key});
@@ -32,8 +32,6 @@ class _TodoAppState extends State<TodoApp> {
               messageSize: ScalingQuery(context).fontSize(1.7),
               message: FLUSHBAR_TODO_SCREEN_MESSAGE)
           .show(context);
-
-      super.initState();
     });
   }
 

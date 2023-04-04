@@ -32,7 +32,7 @@ const FLUSHBAR_TODO_SCREEN_TITLE = 'Todo App';
 //App Constants
 const APP_TITLE = 'Todo App';
 const WELCOME_TITLE_HOME_SCREEN = 'Welcome to Todo app';
-const EMAIL_CANT_BE_EMPTY = 'Email can\'t be empty';
+const TODO_CANT_BE_EMPTY = 'Todo Title can\'t be empty';
 
 //SnackBar Constants
 const SNACK_BAR_ON_TASK_COMPLETE = 'Task marked as completed !';
