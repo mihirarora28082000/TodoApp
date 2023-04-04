@@ -64,12 +64,7 @@ class TodoBloc extends HydratedBloc<TodoEvent, TodoState> {
   }
 
   void _deleteAllTasks(DeleteAllTasks event, Emitter<TodoState> emit) async {
-    List<TodoTask> outgoingTasks = state.outgoingTasks;
-    List<TodoTask> completedTasks = state.completedTasks;
-    outgoingTasks = [];
-    completedTasks = [];
-    emit(TodoState(
-        outgoingTasks: outgoingTasks, completedTasks: completedTasks));
+    emit(const TodoState());
   }
 
   @override

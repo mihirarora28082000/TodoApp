@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-
-import 'package:todoapp/bloc/todo_bloc.dart';
+import 'package:todoapp/presentation/bloc/todo_bloc.dart';
+import 'package:todoapp/presentation/constants/label_names.dart';
 import 'package:todoapp/presentation/screen/home_screen.dart';
 
 void main() async {
@@ -19,16 +19,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TodoBloc(),
-      child: MaterialApp(
-        title: 'Todo App',
-        theme: ThemeData(
-          primarySwatch: Colors.purple,
-          errorColor: Colors.red,
-        ),
-        debugShowCheckedModeBanner: false,
-        home: const HomeScreen(),
-      ),
-    );
+        create: (context) => TodoBloc(),
+        child: MaterialApp(
+            title: APP_TITLE,
+            theme: ThemeData.light().copyWith(
+              buttonColor: Colors.purple,
+              colorScheme: ColorScheme.fromSwatch(
+                primarySwatch: Colors.purple,
+                errorColor: Colors.red,
+                accentColor: Colors.yellow,
+              ),
+              inputDecorationTheme: const InputDecorationTheme(
+                  labelStyle: TextStyle(color: Colors.grey),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        style: BorderStyle.solid, color: Colors.grey),
+                  )),
+              primaryColor: Colors.purple,
+            ),
+            debugShowCheckedModeBanner: false,
+            home: const HomeScreen()));
   }
 }

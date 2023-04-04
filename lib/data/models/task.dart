@@ -20,21 +20,19 @@ class TodoTask extends Equatable {
   List<Object?> get props =>
       [id, description, name, date, priority, isCompleted];
 
-  TodoTask copyWith({
-    String? name,
-    String? description,
-    DateTime? date,
-    int? priority,
-    bool? isCompleted,
-  }) {
+  TodoTask copyWith(
+      {String? name,
+      String? description,
+      DateTime? date,
+      int? priority,
+      bool? isCompleted}) {
     return TodoTask(
-      id: id,
-      description: description ?? this.description,
-      name: name ?? this.name,
-      date: date ?? this.date,
-      priority: priority ?? this.priority,
-      isCompleted: isCompleted ?? this.isCompleted,
-    );
+        id: id,
+        description: description ?? this.description,
+        name: name ?? this.name,
+        date: date ?? this.date,
+        priority: priority ?? this.priority,
+        isCompleted: isCompleted ?? this.isCompleted);
   }
 
   Map<String, dynamic> toMap() {

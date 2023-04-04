@@ -13,16 +13,15 @@ class TodoState extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'outgoingTasks': outgoingTasks.map((x) => x.toMap()).toList(),
-      'completedTasks': completedTasks.map((x) => x.toMap()).toList(),
+      'completedTasks': completedTasks.map((x) => x.toMap()).toList()
     };
   }
 
   factory TodoState.fromMap(Map<String, dynamic> map) {
     return TodoState(
-      outgoingTasks: List<TodoTask>.from(
-          map['outgoingTasks']?.map((x) => TodoTask.fromMap(x))),
-      completedTasks: List<TodoTask>.from(
-          map['completedTasks']?.map((x) => TodoTask.fromMap(x))),
-    );
+        outgoingTasks: List<TodoTask>.from(
+            map['outgoingTasks']?.map((x) => TodoTask.fromMap(x))),
+        completedTasks: List<TodoTask>.from(
+            map['completedTasks']?.map((x) => TodoTask.fromMap(x))));
   }
 }
