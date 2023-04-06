@@ -22,6 +22,27 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
+    # Styling rules:
+     - camel_case_types
+     - avoid_empty_else
+     - always_use_package_imports
+     - avoid_redundant_argument_values
+     - leading_newlines_in_multiline_strings
+     - unnecessary_brace_in_string_interps
+     - library_names
+     - prefer_is_empty
+
+    #fomatting rules:
+     - lines_longer_than_80_chars
+     - curly_braces_in_flow_control_structures
+
+    # doc comments: 
+     - slash_for_doc_comments
+
+    #pub rules:
+     - sort_pub_dependencies
+     - package_names
+     
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 
